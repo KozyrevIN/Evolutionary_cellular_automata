@@ -2,18 +2,26 @@ cmake_minimum_required(VERSION 3.16)
 project(Evolutionary_cellular_automata LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set (CMAKE_CXX_STANDARD 17)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 include(FetchContent)
+#fetching SFML
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x)
+    GIT_TAG        2.6.x
+)
 FetchContent_MakeAvailable(SFML)
+
+#fetching Hana
+FetchContent_Declare(hana
+    GIT_REPOSITORY https://github.com/boostorg/hana.git
+    GIT_TAG        v1.7.0
+)
+FetchContent_MakeAvailable(hana)
 
 add_executable(main 
 		src/main.cpp)
-target_link_libraries(main PRIVATE sfml-graphics)
+target_link_libraries(main PRIVATE sfml-graphics hana)
 target_compile_features(main PRIVATE cxx_std_20)
 
 set(CMAKE_CXX_FLAGS "-fopenmp")
