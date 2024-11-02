@@ -12,16 +12,9 @@ FetchContent_Declare(SFML
 )
 FetchContent_MakeAvailable(SFML)
 
-#fetching Hana
-FetchContent_Declare(hana
-    GIT_REPOSITORY https://github.com/boostorg/hana.git
-    GIT_TAG        v1.7.0
-)
-FetchContent_MakeAvailable(hana)
-
 add_executable(main 
 		src/main.cpp)
-target_link_libraries(main PRIVATE sfml-graphics hana)
+target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_20)
 
 set(CMAKE_CXX_FLAGS "-fopenmp")

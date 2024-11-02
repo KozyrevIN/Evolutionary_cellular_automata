@@ -1,3 +1,6 @@
+#ifndef COMMANDS_HEADER
+#define COMMANDS_HEADER
+
 #include <stdint.h>
 
 /*
@@ -11,20 +14,20 @@
  * 
  * There are alaso several rules all commands MUST follow:
  * 1. Local interaction. Execution of the command mustn't change state of any cells and objects
- *    which position isn't in Moore's neighbourhood of cell initially containing creature.
+ *    which position isn't in Moore's neighbourhood of cell initially containing the creature.
  * 2. Each command outputs int value. This value is then passed as input to next command.
  **/
 
 enum class Commands: uint8_t {
     /*
      * begin
-     * outputs 1. May be used as a starting point for new command sequence (aka gene).
+     * Outputs 1. May be used as a starting point for new command sequence (aka gene).
      * @necessary_attributes: none
      **/
     begin,
     /*
      * end
-     * outputs 1. May be used as a starting point for new command sequence (aka gene).
+     * Outputs 0. May be used as a end point for new command sequence (aka gene).
      * @necessary_attributes: none
      **/
     end,
@@ -38,8 +41,16 @@ enum class Commands: uint8_t {
     count_empty_adjacent,
 
     rotate,
-    move_forward,
+    /*
+     * rotate
+     * Changes direction: new direction = old direction + input. Outputs input.
+     * @necessary_attributes: direction
+     **/
+    move,
     photosynthesize,
-    reproduce,
-    attack
-}
+    clone,
+    attack,
+    eat
+};
+
+#endif

@@ -1,6 +1,7 @@
-#include "../include/kernel/concept/creature.h"
+#include "../settings/compile_time_settings.h"
 
+#include <iostream>
 
 int main() {
-    Creature aboba(1, 2);
+    std::cout << static_cast<int>(Policies::options.getValue<Policies::CreatureAttributes::Direction>()) << '\n';
 }
