@@ -10,9 +10,10 @@ template <auto first_object, auto... rest_objects> class ClassObjectMap {
     constexpr static ClassObjectMap<rest_objects...> rest =
         ClassObjectMap<rest_objects...>();
 
-    template <class T> constexpr static bool isKey() {
+  private:
+    template <class T> constexpr static bool checkIfKey() {
         return std::is_same_v<T, decltype(first_object)> ||
-               rest.template isKey<T>();
+               rest.template checkIfKey<T>();
     }
 
     template <class T> constexpr static T getValue() {
@@ -23,7 +24,6 @@ template <auto first_object, auto... rest_objects> class ClassObjectMap {
         }
     }
 
-  private:
     template <auto object> constexpr static bool checkDuplicateClasses() {
         return std::is_same_v<decltype(object), decltype(first_object)> ||
                rest.template checkDuplicateClasses<object>();
@@ -32,12 +32,20 @@ template <auto first_object, auto... rest_objects> class ClassObjectMap {
     static_assert(!rest.template checkDuplicateClasses<first_object>(),
                   "Multiple objects of same class aren't allowed in template "
                   "declaration!");
+
+  public:
+    template <class T>
+    constexpr static bool isKey = ClassObjectMap::template checkIfKey<T>();
+
+    template <class T>
+    constexpr static T value = ClassObjectMap::template getValue<T>();
 };
 
 template <auto last_object> class ClassObjectMap<last_object> {
     template <auto, auto...> friend class ClassObjectMap;
 
-    template <class T> constexpr static bool isKey() {
+  private:
+    template <class T> constexpr static bool checkIfKey() {
         return std::is_same_v<T, decltype(last_object)>;
     }
 
@@ -47,10 +55,16 @@ template <auto last_object> class ClassObjectMap<last_object> {
         return last_object;
     }
 
-  private:
     template <auto object> constexpr static bool checkDuplicateClasses() {
         return std::is_same_v<decltype(object), decltype(last_object)>;
     }
+
+  public:
+    template <class T>
+    constexpr static bool isKey = ClassObjectMap::template checkIfKey<T>();
+
+    template <class T>
+    constexpr static bool value = ClassObjectMap::template getValue<T>();
 };
 
 #endif

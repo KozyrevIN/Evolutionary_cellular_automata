@@ -55,7 +55,7 @@ class Extractor : public decltype(policy_map) {
         if constexpr (Policies::Helper::not_last_v<map>) {
             return getCommandsCount(map.rest) + is_active_command;
         } else {
-            return 1 + is_active_command;
+            return is_active_command;
         }
     }
 
@@ -72,7 +72,7 @@ class Extractor : public decltype(policy_map) {
         } else if constexpr (Policies::Helper::not_last_v<map>) {
             return getCommandIdx<T>(map.rest) + is_active_command;
         } else {
-            return is_active_command + 1;
+            return is_active_command;
         }
     }
 };

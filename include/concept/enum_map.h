@@ -13,17 +13,21 @@ template <auto... objects>
 concept enums = (std::is_enum_v<decltype(objects)> && ...);
 
 template <auto... enums> class EnumMap : public ClassObjectMap<enums...> {
-  public:
+  private:
     template <Enum T> constexpr static T getValue() {
-        if constexpr (ClassObjectMap<enums...>::template isKey<T>()) {
-            return ClassObjectMap<enums...>::template getValue<T>();
+        if constexpr (ClassObjectMap<enums...>::template isKey<T>) {
+            return ClassObjectMap<enums...>::template value<T>;
         } else {
             return static_cast<T>(0);
         }
     }
 
+  public:
+    template <Enum T>
+    constexpr static T value = EnumMap<enums...>::template getValue<T>();
+
     template <Enum T> constexpr static bool contains(T object) {
-        return (getValue<T>() == object);
+        return (EnumMap<enums...>::template value<T> == object);
     }
 
   protected:
