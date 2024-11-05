@@ -3,44 +3,37 @@
 
 #include "enum_map.h"
 
-namespace Policies 
-{
+namespace Policies {
 
-namespace CellAttributes 
-{
-    enum class Nutrients { Off, On };
+namespace CellAttributes {
+enum class Nutrients { Off, On };
 }
 
-namespace ObjectAttributes
-{
+namespace ObjectAttributes {}
 
+namespace CreatureAttributes {
+enum class Direction { Four, Eight, Off };
 }
 
-namespace CreatureAttributes
-{
-    enum class Direction { Four, Eight, Off };
-}
+namespace Commands {
+enum class Begin { Off, On };
 
-namespace Commands 
-{
-    enum class Begin { Off, On };
+enum class End { Off, On };
 
-    enum class End { Off, On };
+enum class Eat { Off, On };
 
-    enum class Eat { Off, On };
+enum class Rotate { Off, On };
 
-    enum class Rotate { Off, On };
+enum class Divide { Off, On };
+} // namespace Commands
 
-    enum class Divide { Off, On };
-}
+template <auto... enums> class PolicyMap : public EnumMap<enums...> {
 
-template<auto... enums>
-class PolicyMap : public EnumMap<enums...> {
-    
-    static_assert(EnumMap<enums...>::checkImplication(Commands::Eat::On, CellAttributes::Nutrients::On),
+    static_assert(EnumMap<enums...>::checkImplication(
+                      Commands::Eat::On, CellAttributes::Nutrients::On),
                   "Command 'Eat' requires cell attribute 'Nutrients'!");
 };
 
-}
+} // namespace Policies
 
 #endif

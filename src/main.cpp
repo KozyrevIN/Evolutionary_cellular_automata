@@ -4,5 +4,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << static_cast<int>(Policies::config.checkAnd(Policies::CreatureAttributes::Direction::Eight, Policies::Commands::Begin::Off)) << '\n';
+    //std::cout << static_cast<int>(Policies::extractor.map.checkAnd(Policies::CreatureAttributes::Direction::Eight, Policies::Commands::Begin::Off)) << '\n';
+    //std::cout << Policies::extractor.getNum<Policies::Commands::Rotate>() << '\n';
+    std::cout << CPUKernel::config.idx<Policies::Commands::Rotate> << '\n';
 }

@@ -7,8 +7,11 @@ namespace Policies
 {
     constexpr static PolicyMap<
     CreatureAttributes::Direction::Off,
-    CellAttributes::Nutrients::Off
-    > config;
+    Commands::Begin::On,
+    CellAttributes::Nutrients::Off,
+    Commands::End::Off,
+    Commands::Rotate::On
+    > policy_map;
 }
 
 #endif

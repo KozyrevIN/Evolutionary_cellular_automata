@@ -4,16 +4,18 @@
 #include <vector>
 
 #include "entity.h"
-#include "../../../settings/compile_time_settings.h"
+#include "extractor.h"
 
-template<Policies::PolicyMap config>
-struct CreatureTemplate: public Entity {
+class Supervisor;
+
+template <CPUKernel::Extractor extractor>
+struct CreatureTemplate : public Entity {
     int energy;
 
-    //reatureTemplate(int x, int y, uint32_t color, const std::vector<Commands> dna): Entity(x, y, color), dna(dna) {};
-    //auto&& getClone(uint32_t seed);  
+    // reatureTemplate(int x, int y, uint32_t color, const std::vector<Commands>
+    // dna): Entity(x, y, color), dna(dna) {}; auto&& getClone(uint32_t seed);
 };
 
-using Creature = CreatureTemplate<Policies::config>;
+using Creature = CreatureTemplate<CPUKernel::config>;
 
 #endif
